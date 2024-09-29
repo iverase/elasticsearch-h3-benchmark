@@ -3,29 +3,26 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>ivera</groupId>
     <artifactId>elasticsearch-h3-benchmark</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-
-    <name>JMH benchmark sample: Java</name>
-<properties>
-    <jmh.version>1.35</jmh.version>
-    <javac.target>21</javac.target>
-</properties>
-
-<dependencies>
-	<dependency>
-	    <groupId>org.openjdk.jmh</groupId>
-	    <artifactId>jmh-core</artifactId>
-	    <version>${jmh.version}</version>
-	</dependency>
-	<dependency>
-	    <groupId>org.openjdk.jmh</groupId>
-	    <artifactId>jmh-generator-annprocess</artifactId>
-	    <version>${jmh.version}</version>
-	</dependency>
+    <name>Elastic h3 vs Uber h3</name>
+    <properties>
+        <jmh.version>1.35</jmh.version>
+        <javac.target>21</javac.target>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>${jmh.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>${jmh.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.uber</groupId>
             <artifactId>h3</artifactId>
@@ -36,48 +33,47 @@
             <artifactId>elasticsearch-h3</artifactId>
             <version>LATEST</version>
         </dependency>
-</dependencies>
-<build>
-	<plugins>
-	    <plugin>    
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-compiler-plugin</artifactId>
-	        <version>3.8.1</version>
-	        <configuration>
-	            <source>{javac.target}</source>
-	            <target>{javac.target}</target>
-	            <annotationProcessorPaths>
-	                <path>
-	                    <groupId>org.openjdk.jmh</groupId>
-	                    <artifactId>jmh-generator-annprocess</artifactId>
-	                    <version>${jmh.version}</version>
-	                </path>
-	            </annotationProcessorPaths>
-	        </configuration>
-	    </plugin>
-	    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.0</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <finalName>benchmarks</finalName>
-              <transformers>
-                <transformer
-                  implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>org.openjdk.jmh.Main</mainClass>
-                </transformer>
-              </transformers>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-	</plugins>
-</build>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${javac.target}</source>
+                    <target>${javac.target}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.openjdk.jmh</groupId>
+                            <artifactId>jmh-generator-annprocess</artifactId>
+                            <version>${jmh.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>benchmarks</finalName>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>org.openjdk.jmh.Main</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
